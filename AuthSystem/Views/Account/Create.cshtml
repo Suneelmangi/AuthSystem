@@ -1,0 +1,91 @@
+﻿@*@model AuthSystem.Models.Employee*@
+@model EmployeeViewModel
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1><u>Create Employee</u></h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form id="AccountCreateform" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Employee.Ename" class="control-label"></label>
+                <input asp-for="Employee.Ename" class="form-control" required />
+                <span asp-validation-for="Employee.Ename" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Employee.Egender" class="control-label"></label>
+                <select asp-for="Employee.Egender" class="form-control">
+                    <option value="None" selected disabled hidden>Select Gender</option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                </select>
+
+                @*<span asp-validation-for="Egender" class="text-danger"></span>*@
+            </div>
+            @* <div class="form-group">
+            <label asp-for="Egender" class="control-label"></label>
+            <select name="Gender" asp-for="Egender">
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+            </select>
+            </div>*@
+            <div class="form-group">
+                <label asp-for="Employee.Ephone" class="control-label"></label>
+                <input type="number" asp-for="Employee.Ephone" class="form-control" required />
+                <span asp-validation-for="Employee.Ephone" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Employee.Eaddress" class="control-label"></label>
+                <input asp-for="Employee.Eaddress" class="form-control" />
+                @*<span asp-validation-for="Eaddress" class="text-danger"></span>*@
+            </div><br />
+            <div class="form-group">
+                <button id="btnCreate"  class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+
+
+
+<script>
+
+    $('#btnCreate').click(async function (e) {
+       debugger;
+        e.preventDefault();
+       // var queryArr = [];
+        var formData = $("#AccountCreateform").serializeArray();
+        var dataObject = formData.reduce(function (obj, item) {
+            obj[item.name.split('.')[1]] = item.value;
+            return obj;
+        }, {});
+        var dataToSend = {
+            vm: {
+                Employee: dataObject
+            }
+        };
+        $.ajax({
+            url: '/Account/Create',
+            type: 'Post',                  
+            data: dataToSend,
+            success: function (response) {
+                // Code to be executed when the request is successful
+            },
+            error: function (xhr, status, error) {
+                // Code to be executed when the request encounters an error
+            }
+        });
+    });
+
+</script>

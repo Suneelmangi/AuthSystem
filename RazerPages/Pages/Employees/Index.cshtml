@@ -1,0 +1,54 @@
+﻿@page
+@model RazerPages.Pages.Employee.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Employee[0].Ename)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Employee[0].Egender)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Employee[0].Ephone)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Employee[0].Eaddress)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Employee) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Ename)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Egender)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Ephone)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Eaddress)
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.Eid">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.Eid">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.Eid">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
